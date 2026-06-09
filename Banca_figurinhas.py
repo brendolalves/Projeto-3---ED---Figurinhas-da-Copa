@@ -71,3 +71,16 @@ PAISES_CONFIG = [
     {"nome": "Equador", "faker_loc": "es_CO"},
     {"nome": "Costa Rica", "faker_loc": "es_MX"},
 ]
+
+fakers_cache = {}
+for pais in PAISES_CONFIG:
+    loc = pais["faker_loc"]
+    if loc not in fakers_cache:
+        try:
+            fakers_cache[loc] = Faker(loc)
+        except (AttributeError, ValueError):
+            fakers_cache[loc] = Faker("en_US")
+
+POSICOES_LINHA = ["Goleiro", "Zagueiro", "Lateral", "Meio-Campo", "Atacante"]
+RARIDADES = ["Muito Raro", "Raro", "Comum"]
+PESOS_RARIDADES = [0.05, 0.05, 0.90]
