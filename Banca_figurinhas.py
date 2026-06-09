@@ -84,3 +84,26 @@ for pais in PAISES_CONFIG:
 POSICOES_LINHA = ["Goleiro", "Zagueiro", "Lateral", "Meio-Campo", "Atacante"]
 RARIDADES = ["Muito Raro", "Raro", "Comum"]
 PESOS_RARIDADES = [0.05, 0.05, 0.90]
+
+def limpar_e_normalizar_nome(nome_cru):
+    # 1. Lista expandida de pronomes de tratamento comuns gerados pelo Faker
+    lista_pronomes = r"\b(Sr|Sra|Dr|Dra|Mr|Mrs|Ms|Miss|Ing|Prof|Pan|Hr|Fr|Mme|Mlle|Doc|Srta)\b\.?\s*"
+    nome_limpo = re.sub(lista_pronomes, "", nome_cru, flags=re.IGNORECASE)
+    
+    # 2. Remove especificamente o termo (a) ou (a). que costuma aparecer
+    # O hífen ou espaço extra antes/depois do (a) também será tratado
+    nome_limpo = re.sub(r"\s*\(a\)\.?\s*", " ", nome_limpo, flags=re.IGNORECASE)
+    
+    # 3. Substitui múltiplos espaços em branco por apenas um espaço simples
+    nome_limpo = re.sub(r"\s+", " ", nome_limpo)
+    
+    # Retorna o nome retirando espaços extras no início ou no fim
+    return nome_limpo.strip()
+
+def gerar_nome_masculino_limpo(faker_instancia):
+    try:
+        nome_cru = faker_instancia.name_male()
+    except AttributeError:
+        nome_cru = faker_instancia.name()
+        
+    return limpar_e_normalizar_nome(nome_cru)
