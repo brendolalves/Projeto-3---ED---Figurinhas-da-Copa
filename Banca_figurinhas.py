@@ -152,3 +152,18 @@ def gerar_album_completo():
 
     return figurinhas
 
+def salvar_em_csv(dados, nome_arquivo):
+    colunas = ["id", "nome", "pais", "posicao", "raridade"]
+
+    # O segredo para os acentos exóticos não quebrarem ao salvar é usar encoding='utf-8'
+    with open(nome_arquivo, mode="w", newline="", encoding="utf-8") as arquivo:
+        escritor = csv.DictWriter(arquivo, fieldnames=colunas)
+        escritor.writeheader()
+        escritor.writerows(dados)
+
+    print(f"Sucesso! Álbum gerado com {len(dados)} figurinhas em: '{nome_arquivo}'")
+
+
+if __name__ == "__main__":
+    dados_album = gerar_album_completo()
+    salvar_em_csv(dados_album, ARQUIVO_OUTPUT)
