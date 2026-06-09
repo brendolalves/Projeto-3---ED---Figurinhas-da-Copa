@@ -107,3 +107,48 @@ def gerar_nome_masculino_limpo(faker_instancia):
         nome_cru = faker_instancia.name()
         
     return limpar_e_normalizar_nome(nome_cru)
+
+def gerar_album_completo():
+    figurinhas = []
+    id_atual = 1
+
+    for pais_info in PAISES_CONFIG:
+        nome_pais = pais_info["nome"]
+        faker_pais = fakers_cache[pais_info["faker_loc"]]
+
+        # 1. TITULARES
+        for _ in range(TITULARES_POR_SELECAO):
+            nome = gerar_nome_masculino_limpo(faker_pais)
+            posicao = random.choice(POSICOES_LINHA)
+            raridade = random.choices(RARIDADES, weights=PESOS_RARIDADES, k=1)[0]
+            
+            figurinhas.append({
+                "id": id_atual, "nome": nome, "pais": nome_pais,
+                "posicao": f"{posicao} (Titular)", "raridade": raridade
+            })
+            id_atual += 1
+
+        # 2. RESERVAS
+        for _ in range(RESERVAS_POR_SELECAO):
+            nome = gerar_nome_masculino_limpo(faker_pais)
+            posicao = random.choice(POSICOES_LINHA)
+            raridade = random.choices(RARIDADES, weights=PESOS_RARIDADES, k=1)[0]
+            
+            figurinhas.append({
+                "id": id_atual, "nome": nome, "pais": nome_pais,
+                "posicao": f"{posicao} (Reserva)", "raridade": raridade
+            })
+            id_atual += 1
+
+        # 3. TÉCNICO
+        nome_tecnico = gerar_nome_masculino_limpo(faker_pais)
+        raridade_tecnico = random.choices(RARIDADES, weights=PESOS_RARIDADES, k=1)[0]
+        
+        figurinhas.append({
+            "id": id_atual, "nome": nome_tecnico, "pais": nome_pais,
+            "posicao": "Técnico", "raridade": raridade_tecnico
+        })
+        id_atual += 1
+
+    return figurinhas
+
