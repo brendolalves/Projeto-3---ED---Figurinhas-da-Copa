@@ -1,6 +1,3 @@
-import csv
-import random
-
 class figurinhas:
     def __init__(self, id_fig, nome, pais, posicao, raridade):
         self.id = int(id_fig)
