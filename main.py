@@ -1,5 +1,5 @@
 import random
-from estrutura import Album, FilaHistorico, Figurinha
+from estrutura import Album, FilaHistorico, figurinha
 from gravar import carregar_banca_completa, salvar_album_csv, salvar_historico_csv
 
 
@@ -51,7 +51,7 @@ def menu_principal():
             pacotao = random.choices(dados_banca, k=total_figurinhas_ganhas)
             
             for item in pacotao:
-                fig = Figurinha(item['id'], item['nome'], item['pais'], item['posicao'], item['raridade'])
+                fig = figurinha(item['id'], item['nome'], item['pais'], item['posicao'], item['raridade'])
                 print(f"Ganhou: ID {fig.id:4} | {fig.nome:<35} | {fig.pais:<15} ({fig.raridade})")
                 
                 if alvo_album.existe_id(fig.id):

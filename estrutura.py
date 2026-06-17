@@ -1,4 +1,4 @@
-class figurinhas:
+class figurinha:
     def __init__(self, id_fig, nome, pais, posicao, raridade):
         self.id = int(id_fig)
         self.nome = nome
@@ -43,7 +43,7 @@ class Album:
             atual = atual.proximo
         return False
     
-    def renover(self, id_buscado: int):
+    def remover(self, id_buscado: int):
         if self.cabeca is None:
             return None
         
