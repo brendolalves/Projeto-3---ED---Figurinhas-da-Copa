@@ -8,3 +8,9 @@ class figurinhas:
         self.pais = pais
         self.posicao = posicao
         self.raridade = raridade
+
+class NodoLista:
+    def __init__(self, figurinha):
+        self.figurinha = figurinha
+        self.proximo = None
+
