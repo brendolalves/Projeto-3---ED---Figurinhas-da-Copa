@@ -97,3 +97,31 @@ class Album:
             id_esperado += 1
         print("\n")
 
+class NodoFila:
+    def __init__(self, descricao_troca: str):
+        self.descricao = descricao_troca
+        self.proximo = None
+
+class FilaHistorico:
+    def __init__(self):
+        self.inicio = None
+        self.fim = None
+
+    def enqueue(self, descricao_troca: str):
+        """Insere uma nova mensagem/registro no fim da fila de histórico"""
+        novo_nodo = NodoFila(descricao_troca)
+        if self.fim is None:
+            self.inicio = self.fim = novo_nodo
+            return
+        self.fim.proximo = novo_nodo
+        self.fim = novo_nodo
+
+    def dequeue(self) -> str:
+        """Remove e retorna o registro mais antigo (padrão FIFO)"""
+        if self.inicio is None:
+            return None
+        temp = self.inicio
+        self.inicio = self.inicio.proximo
+        if self.inicio is None:
+            self.fim = None
+        return temp.descricao
